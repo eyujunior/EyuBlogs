@@ -1,41 +1,41 @@
 <template>
-  <div class="home">
-    <blog-post :post="welcomeScreen" />
-    <blog-post
-      :post="post"
-      v-for="(post, index) in sampleBlogPosts"
-      :key="index"
-    />
+  <div class="blog-wrapper no-user">
+    <div class="blog-content">
+      <div>
+        <h2 v-if="post.welcomeScreen">{{ post.title }}</h2>
+        <h2 v-else>{{ post.title }}</h2>
+        <p v-if="post.welcomeScreen">{{ post.blogPost }}</p>
+        <p class="content-preview" v-else>{{ post.blogHTML }}</p>
+        <router-link class="link link-light" to="#" v-if="post.welcomeScreen">
+          Login/Register<arrow class="arrow arrow-light"
+        /></router-link>
+        <router-link class="link" to="#" v-else>
+          View Post<arrow class="arrow"
+        /></router-link>
+      </div>
+    </div>
+    <div class="blog-photo">
+      <img
+        :src="require(`../assets/blogPhotos/${post.photo}.jpg`)"
+        v-if="post.welcomeScreen"
+        alt=""
+      />
+      <img
+        :src="require(`../assets/blogPhotos/${post.blogCoverPhoto}.jpg`)"
+        v-else
+        alt=""
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import BlogPost from "../components/BlogPost.vue";
+import Arrow from "../assets/Icons/arrow-right-light.svg";
 export default {
-  name: "Home",
-  components: { BlogPost },
-  data() {
-    return {
-      welcomeScreen: {
-        title: "Welcome",
-        blogPost:
-          "Weekly blog articles with all things programming including HTML, CSS, JavaScript and more. Register today to never miss a post!",
-        welcomeScreen: true,
-        photo: "coding",
-      },
-      sampleBlogPosts: [
-        {
-          title: "This is a Filler Title 1",
-          blogHTML: "This is a filler blog post title",
-          blogCoverPhoto: "beautiful-stories",
-        },
-        {
-          title: "This is a Filler Title",
-          blogHTML: "This is a filler blog post title",
-          blogCoverPhoto: "designed-for-everyone",
-        },
-      ],
-    };
+  name: "blogPost",
+  props: ["post"],
+  components: {
+    Arrow,
   },
 };
 </script>
@@ -139,7 +139,7 @@ export default {
 }
 .no-user:first-child {
   .blog-content {
-    background-color: #303030;
+    background-color: #1b1b1b;
     color: #fff;
   }
 }
